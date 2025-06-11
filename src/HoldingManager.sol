@@ -31,6 +31,7 @@ import { IStablesManager } from "./interfaces/core/IStablesManager.sol";
  *
  * @custom:security-contact support@jigsaw.finance
  */
+//@>i user's primary interaction point
 contract HoldingManager is IHoldingManager, Ownable2Step, Pausable, ReentrancyGuard {
     using SafeERC20 for IERC20;
 
@@ -105,7 +106,7 @@ contract HoldingManager is IHoldingManager, Ownable2Step, Pausable, ReentrancyGu
         // Instead of deploying the contract, it is cloned to save on gas.
         address newHoldingAddress = Clones.clone(holdingImplementationReference);
         emit HoldingCreated({ user: msg.sender, holdingAddress: newHoldingAddress });
-
+        //@>i after creating the holding, we need to update the mappings
         isHolding[newHoldingAddress] = true;
         userHolding[msg.sender] = newHoldingAddress;
         holdingUser[newHoldingAddress] = msg.sender;
@@ -127,6 +128,7 @@ contract HoldingManager is IHoldingManager, Ownable2Step, Pausable, ReentrancyGu
      * @param _token Token's address.
      * @param _amount Amount to deposit.
      */
+    //@>i transfer asset to holding & add collateral to Stables Manager
     function deposit(
         address _token,
         uint256 _amount
@@ -270,7 +272,7 @@ contract HoldingManager is IHoldingManager, Ownable2Step, Pausable, ReentrancyGu
         bool _mintDirectlyToUser
     ) external override nonReentrant whenNotPaused validHolding(userHolding[msg.sender]) returns (uint256 jUsdMinted) {
         address holding = userHolding[msg.sender];
-
+        //@>q why here it first borrows and then emits the event? but in repay it first emits the event and then repays?
         jUsdMinted = _getStablesManager().borrow({
             _holding: holding,
             _token: _token,
@@ -361,7 +363,7 @@ contract HoldingManager is IHoldingManager, Ownable2Step, Pausable, ReentrancyGu
         bool _repayFromUser
     ) external override nonReentrant whenNotPaused validHolding(userHolding[msg.sender]) {
         address holding = userHolding[msg.sender];
-
+        //@>q User must approve JigsawUSD spending first! where is this approve?
         emit Repaid({ holding: holding, token: _token, amount: _amount, repayFromUser: _repayFromUser });
         _getStablesManager().repay({
             _holding: holding,

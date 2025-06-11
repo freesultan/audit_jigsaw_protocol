@@ -65,10 +65,12 @@ contract Holding is IHolding, Initializable, ReentrancyGuard {
      *
      * @param _manager Contract that holds all the necessary configs of the protocol.
      */
+    //@>i Called by the HoldingManager right after your Holding is created.
     function init(
         address _manager
     ) public initializer {
         require(_manager != address(0), "3065");
+        //@>i sets the manager address which has the addresses of the holding manager, liquidation manager, swap manager, etc.
         manager = IManager(_manager);
     }
 
@@ -179,7 +181,7 @@ contract Holding is IHolding, Initializable, ReentrancyGuard {
 
     modifier onlyAllowed() {
         (,, bool isStrategyWhitelisted) = IStrategyManagerMin(manager.strategyManager()).strategyInfo(msg.sender);
-
+        //@>q what is this isStrategyWhitelisted? why does this isStrategyWhitelisted can bypass all checks?
         require(
             msg.sender == manager.holdingManager() || msg.sender == manager.liquidationManager()
                 || msg.sender == manager.swapManager() || isStrategyWhitelisted,
@@ -188,7 +190,8 @@ contract Holding is IHolding, Initializable, ReentrancyGuard {
         _;
     }
 
-    modifier onlyUser() {
+
+    modifier onlyUser() { //@>i the user is the owner of the holding, which is the address that created the holding.
         require(msg.sender == IHoldingManager(manager.holdingManager()).holdingUser(address(this)), "1000");
         _;
     }

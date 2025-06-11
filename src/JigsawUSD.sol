@@ -18,6 +18,10 @@ import { IStablesManager } from "./interfaces/core/IStablesManager.sol";
  *
  * It has additional features such as minting and burning, and specific roles for the owner and the Stables Manager.
  */
+//@>i  designed to maintain a stable value, aiming to be pegged 1:1 with the US Dollar (USD).
+//@>i its supply is managed directly by the protocol: new jUSD is minted when users borrow, and jUSD is burned when users repay.
+//@>i so totalsupply at any point in time is the sum of all the jUSD borrowed by users. so it can be zero at some  points
+
 contract JigsawUSD is IJigsawUSD, ERC20, Ownable2Step, ERC20Permit {
     /**
      * @notice Contract that contains all the necessary configs of the protocol.
@@ -39,7 +43,8 @@ contract JigsawUSD is IJigsawUSD, ERC20, Ownable2Step, ERC20Permit {
         address _manager
     ) Ownable(_initialOwner) ERC20("Jigsaw USD", "jUSD") ERC20Permit("Jigsaw USD") {
         require(_manager != address(0), "3065");
-        manager = IManager(_manager);
+        manager = IManager(_manager); //@>i  manager is the contract that holds all the necessary configs of the protocol.
+        //@>q what's the decimals for the token?
         mintLimit = 15e6 * (10 ** decimals()); // initial 15M limit
     }
 
