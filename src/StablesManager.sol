@@ -26,6 +26,8 @@ import { IStablesManager } from "./interfaces/core/IStablesManager.sol";
  *
  * @custom:security-contact support@jigsaw.finance
  */
+
+//@>i The StablesManager relies heavily on the information and functionality provided by the SharesRegistry.
 contract StablesManager is IStablesManager, Ownable2Step, Pausable {
     using Math for uint256;
 
