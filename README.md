@@ -1,18 +1,5 @@
 # Jigsaw Protocol v1
-
-<p align="center">
-  <img src="https://github.com/jigsaw-finance/jigsaw-lite/assets/102415071/894b1ec7-dcbd-4b2d-ac5d-0a9d0df26313" alt="jigsaw 2"><br>
-  <a href="https://github.com/jigsaw-finance/jigsaw-lite/actions/workflows/test.yml">
-    <img src="https://github.com/jigsaw-finance/jigsaw-lite/actions/workflows/test.yml/badge.svg" alt="test">
-  </a>
-  <a href="https://github.com/jigsaw-finance/jigsaw-lite/blob/main/LICENSE">
-    <img src="https://img.shields.io/badge/License-MIT-blue.svg" alt="License: MIT">
-  </a>
-  <img alt="GitHub commit activity (branch)" src="https://img.shields.io/github/commit-activity/m/jigsaw-finance/jigsaw-lite">
-</p>
-
-[foundry]: https://getfoundry.sh/
-[foundry-badge]: https://img.shields.io/badge/Built%20with-Foundry-FFDB1C.svg
+ 
 
 ## Overview
 
@@ -21,7 +8,7 @@ Jigsaw is a **Collateralized Debt Position (CDP)-based stablecoin protocol** des
 Unlike traditional CDP systems that lock up assets in a static manner, **Jigsaw enables collateral to remain active** within the DeFi ecosystem, allowing users to earn yield while maintaining collateralized positions. This unlocks unprecedented **flexibility** and **efficiency**, making Jigsaw a powerful tool for DeFi users and liquidity providers.
 
 For further details, consult the [Gitbook](https://jigsaw.gitbook.io/jigsaw-protocol) and [Wiki](https://github.com/jigsaw-finance/jigsaw-protocol-v1/wiki).
-
+ 
 ## Key Features
 
 - **Dynamic Collateral:** Utilize assets as collateral without sacrificing yield potential.
